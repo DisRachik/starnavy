@@ -1,3 +1,6 @@
 module.exports = {
-  extends: ["@repo/eslint-config/react.js"],
+  extends: ['@repo/eslint-config/react.js'],
+  parserOptions: {
+    project: true,
+  },
 };
