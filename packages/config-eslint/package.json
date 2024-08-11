@@ -2,8 +2,16 @@
   "name": "@repo/eslint-config",
   "version": "0.0.0",
   "private": true,
+  "files": [
+    "library.js",
+    "next.js",
+    "react.js"
+  ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
     "@vercel/style-guide": "^5.2.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^2.0.0"
   }
 }

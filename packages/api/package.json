@@ -1,0 +1,21 @@
+{
+  "name": "@repo/api",
+  "version": "0.0.0",
+  "license": "MIT",
+  "exports": {
+    "./get-data": "./src/get-data.ts"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "eslint src/"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "axios": "^1.7.3"
+  }
+}
