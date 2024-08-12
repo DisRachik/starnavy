@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CustomLink } from '@repo/ui/custom-link';
+import { CustomLink } from '@repo/ui/component';
 
 export default function Page(): JSX.Element {
   return (
