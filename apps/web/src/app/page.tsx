@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { CustomLink } from '@repo/ui/custom-link';
-import Image from 'next/image';
-import { getData } from '@repo/api/get-data';
+import { CustomLink, Grid } from '@repo/ui/component';
+import { getPeople } from '@repo/api/get-data';
 
 export default async function Page(): Promise<JSX.Element> {
-  const data = await getData('/people/10');
+  const data = await getPeople();
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-24'>
       <div className='z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex'>
@@ -20,12 +19,7 @@ export default async function Page(): Promise<JSX.Element> {
           TEST
         </CustomLink>
       </div>
-      <Image
-        alt={data.name}
-        src={`https://starwars-visualguide.com/assets/img/characters/${data.id}.jpg`}
-        width={500}
-        height={500}
-      />
+      <Grid data={data} />
     </main>
   );
 }
