@@ -18,7 +18,8 @@ module.exports = {
       '@vercel/style-guide/eslint/typescript',
       '@vercel/style-guide/eslint/react',
     ].map(require.resolve),
-    'prettier',
+    ...['prettier', 'turbo'],
+    ,
   ],
   parserOptions: {
     project,
