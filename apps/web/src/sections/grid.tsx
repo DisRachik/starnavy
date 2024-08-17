@@ -18,7 +18,6 @@ export function Grid({ people, totalCharacters }: GridProps<DataItem>): JSX.Elem
   const [characters, setCharacters] = useState(people);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(2);
-  const [hasMorePages, setHasMorePages] = useState(characters.length < totalCharacters);
 
   const loadMoreCharacters = useCallback(async () => {
     if (isLoading) return;
@@ -28,7 +27,6 @@ export function Grid({ people, totalCharacters }: GridProps<DataItem>): JSX.Elem
       const { results }: { results: ICharacter[] } = await getPeople(page);
       setCharacters(prev => [...prev, ...results]);
       setPage(prev => prev + 1);
-      setHasMorePages(results.length > 0);
     } catch (e) {
       throw new Error(`Error loading more characters: ${(e as Error).message}`);
     } finally {
@@ -37,7 +35,9 @@ export function Grid({ people, totalCharacters }: GridProps<DataItem>): JSX.Elem
   }, [isLoading, page]);
 
   const { targetRef } = useIntersectionObserver({
-    onIntersect: loadMoreCharacters,
+    onIntersect: () => {
+      void loadMoreCharacters();
+    },
   });
 
   return (
@@ -58,7 +58,7 @@ export function Grid({ people, totalCharacters }: GridProps<DataItem>): JSX.Elem
           );
         })}
       </ul>
-      {hasMorePages ? <div ref={targetRef}>{isLoading ? 'Loading...' : null}</div> : null}
+      {characters.length < totalCharacters ? <div ref={targetRef}>{isLoading ? 'Loading...' : null}</div> : null}
     </section>
   );
 }

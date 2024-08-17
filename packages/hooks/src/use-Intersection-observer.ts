@@ -8,10 +8,11 @@ interface Options {
 }
 
 interface HookReturnType {
-  targetRef: MutableRefObject<HTMLElement | null>;
+  targetRef: MutableRefObject<HTMLDivElement | null>;
   entry?: IntersectionObserverEntry;
 }
 
+// determine default values for Observers options value
 export function useIntersectionObserver({
   threshold = 0,
   root = null,
@@ -19,7 +20,8 @@ export function useIntersectionObserver({
   onIntersect,
 }: Options = {}): HookReturnType {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
-  const targetRef = useRef<HTMLElement | null>(null);
+  // ref must be hanging on an element that'll be monitored
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   const callbackFn = (entries: IntersectionObserverEntry[]): void => {
     const [entry] = entries;
@@ -33,14 +35,16 @@ export function useIntersectionObserver({
 
   useEffect(() => {
     const currentRef = targetRef.current;
+
+    // checking - if a tracked element exists then could add up the subscription
     if (!currentRef) return;
 
-    const observer = new IntersectionObserver(callbackFn, { threshold, root, rootMargin });
+    const obs = new IntersectionObserver(callbackFn, { threshold, root, rootMargin });
 
-    observer.observe(currentRef);
+    obs.observe(currentRef);
 
     return () => {
-      observer.disconnect();
+      obs.disconnect();
     };
   }, [threshold, root, rootMargin, onIntersect]);
 
